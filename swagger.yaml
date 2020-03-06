@@ -1,0 +1,50 @@
+swagger: "2.0"
+info:
+  description: "This is used to show the API information"
+  version: "1.0.0"
+  title: "Image Processing API"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "zhengxing@seattleu.edu"
+host: "localhost:5000"
+basePath: "/img"
+tags:
+- name: "image processing"
+  description: "Everything about process image"
+schemes:
+- "http"
+paths:
+  /resize:
+    post:
+      tags:
+      - "img"
+      summary: "resize image"
+      description: "resize an image to the size you want"
+      consumes:
+        - "image/jpeg"
+      produces:
+        - "application/octet_stream"
+      parameters:
+      - name: "w"
+        in: "query"
+        description: "the width of the image you want to resize to"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "h"
+        in: "query"
+        description: "the height of the image you want to resize to"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "data"
+        in: "body"
+        description: "the encoded-image string"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "missing parameters"
