@@ -20,8 +20,6 @@ paths:
       - "img"
       summary: "resize image"
       description: "resize an image to the size you want"
-      consumes:
-        - "image/jpeg"
       produces:
         - "application/octet_stream"
       parameters:
@@ -37,6 +35,78 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - name: "data"
+        in: "body"
+        description: "the encoded-image string"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "missing parameters"
+  /rotate:
+    post:
+      tags:
+      - "img"
+      summary: "rotate image"
+      description: "rotate an image with the angle you set"
+      produces:
+        - "application/octet_stream"
+      parameters:
+      - name: "angle"
+        in: "query"
+        description: "the angle of the image you want to rorate with"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "data"
+        in: "body"
+        description: "the encoded-image string"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "missing parameters"
+  /flip:
+    post:
+      tags:
+      - "img"
+      summary: "flip image"
+      description: "flip an image with the direction you set"
+      produces:
+        - "application/octet_stream"
+      parameters:
+      - name: "dir"
+        in: "query"
+        description: "the direction of the image you want to flip with"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "data"
+        in: "body"
+        description: "the encoded-image string"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "missing parameters"
+  /gray:
+    post:
+      tags:
+      - "img"
+      summary: "gray image"
+      description: "convert an image to grayscale"
+      produces:
+        - "application/octet_stream"
+      parameters:
       - name: "data"
         in: "body"
         description: "the encoded-image string"
