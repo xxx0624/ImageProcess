@@ -10,6 +10,8 @@ import numpy as np
 import zlib
 import random
 import string
+import argparse
+
 
 addr = 'http://localhost:5000'
 
@@ -153,10 +155,67 @@ def gray(file_path):
     cv2.imwrite(file_path, img_array)
 
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(help='commands', dest='subparsers')
+
+    resize_parser = subparsers.add_parser('resize', help='resize images')
+    resize_parser.add_argument('--file', '-f', action='store',
+            help='the local path of images', required=True, type=str)
+    resize_parser.add_argument('--widthRatio', '-wr', action='store', 
+            help='the width ratio to the old image width, from 0.0 to 1.0', required=True, type=float)
+    resize_parser.add_argument('--heightRatio', '-hr', action='store', 
+            help='the height ratio to the old image height, from 0.0 to 1.0', required=True, type=float)
+    
+    flip_parser = subparsers.add_parser('flip', help='flip images')
+    flip_parser.add_argument('--file', '-f', action='store',
+            help='the local path of images', required=True, type=str)
+    flip_parser.add_argument('--dir', '-d', action='store', 
+            help='the flip direction, v for vertically, h for horizontally', required=True, type=str)
+    
+    rotate_parser = subparsers.add_parser('rotate', help='rotate images')
+    rotate_parser.add_argument('--file', '-f', action='store',
+            help='the local path of images', required=True, type=str)
+    rotate_parser.add_argument('--angle', '-a', action='store', 
+            help='the rotate angle, <0 for clockwise rotation, >0 counter-clockwise rotation', required=True, type=int)
+
+    gray_parser = subparsers.add_parser('gray', help='gray images')
+    gray_parser.add_argument('--file', '-f', action='store',
+            help='the local path of images', required=True, type=str)
+
+    thumb_parser = subparsers.add_parser('thumb', help='get thumbnail images')
+    thumb_parser.add_argument('--file', '-f', action='store',
+            help='the local path of images', required=True, type=str)
+    
+    return parser.parse_args()
+
+def apply_op(results):
+    op = results.subparsers
+    if op == 'flip':
+        # print (results.dir)
+        # print (results.file)
+        flip(results.file, results.dir)
+    if op == 'resize':
+        # print (results.widthRatio, results.heightRatio)
+        # print (results.file)
+        resize(results.file, results.widthRatio, results.heightRatio)
+    if op == 'rotate':
+        # print (results.angle)
+        # print (results.file)
+        rotate(results.file, results.angle)
+    if op == 'gray':
+        # print (results.file)
+        gray(results.file)
+    if op == 'thumb':
+        # print (results.file)
+        generate_thumbnail(results.file)
+    
+
 if __name__ == '__main__':
-    resize('/Users/xxx0624/Downloads/drives/IMG_8440.JPG', 0.5, 0.5)
-    rotate('/Users/xxx0624/Downloads/drives/IMG_8440.JPG', 90)
-    flip('/Users/xxx0624/Downloads/drives/IMG_8440.JPG', 'h')
-    generate_thumbnail('/Users/xxx0624/Downloads/drives/IMG_8440.JPG')
-    gray('/Users/xxx0624/Downloads/drives/IMG_8440.JPG')
+    # resize('/Users/xxx0624/Downloads/drives/IMG_8440.JPG', 0.5, 0.5)
+    # rotate('/Users/xxx0624/Downloads/drives/IMG_8440.JPG', 90)
+    # flip('/Users/xxx0624/Downloads/drives/IMG_8440.JPG', 'h')
+    # generate_thumbnail('/Users/xxx0624/Downloads/drives/IMG_8440.JPG')
+    # gray('/Users/xxx0624/Downloads/drives/IMG_8440.JPG')
+    apply_op(parse_args())
     pass
