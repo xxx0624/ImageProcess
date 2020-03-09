@@ -1,17 +1,32 @@
 ## Image Process
 
-This project is used to help users to do some simple process work, including rotating, fliping, resizing and graying images. Users can apply one action / many actions to the image at one time.
+This project is used to help users to do some simple process work, including rotating, fliping, resizing, graying and generating thumbnail images. Users can apply one / many actions to the image at one time. At the end, the new image will be saved in local disk where the client is running.
 
-### What does the processor need
-1. the local image path
+`To applying multiple actions, these actions will be applied in order and you just need specify the location only once. if provided the location for more than 2 times, it will fail. Please see the below examples.`
+
+### Prepare
+1. an image in the local disk
 2. the operations you want to apply to the image
-2. a python3 environment to run the client
-### what will users get
-1. the processed image with a new name `oldFileName-randomInteger-theOperationName.jpg`, and it's created in the location same as where the client run at
+2. a python3 environment to run the client: `pip3 install -r /path/to/requirements.txt`
+### How to use
+1. Apply only one action to the image
 ```
-eg. resize this image:
-Old Image: /path1/path2/img1.png 
-New Image: /path1/path2/img1-12345-resized.jpg
+// resize the imageExample.jpg to the new size with width 100 and height 200
+python3 client.py resize -f /path/to/imageExample.jpg -w 100 -h 200
+
+// flip the imageExample.jpg vertically
+python3 client.py flip -d v -f /path/to/imageExample.jpg
+
+More info: python3 client3.py -h
+```
+2. Apply multiple actions to the image
+```
+// resize the image twice but lastly the size is 50*20
+python3 client.py resize -f /path/to/imageExample.jpg -w 100 -h 200 resize -w 50 -h 20
+
+// resize -> flip -> rotate -> gray -> thumb
+// specify the image location only one time
+python3 client.py resize -f /path/to/image.jpg -w 100 -hi 200 flip -d v rotate -a 100 gray thumb
 ```
 
 ## Architecture
@@ -24,5 +39,3 @@ New Image: /path1/path2/img1-12345-resized.jpg
 
 ## APIs
 [API documents by Swagger](https://xxx0624.github.io/ImageProcess/)
-
-## How to use the processor
