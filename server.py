@@ -31,12 +31,12 @@ def resize():
     height = request.args.get('h')
     if width is None or height is None:
         return Response(response=json.dumps({'msg': 'missing paramaters'}), status=400, mimetype="application/json")
-    width = float(width)
-    height = float(height)
+    width = int(width)
+    height = int(height)
     # decode image
     img = cv2.imdecode(img_arr, cv2.IMREAD_COLOR)
     # resize image
-    img = cv2.resize(img, (0,0), fx=width, fy=height)
+    img = cv2.resize(img, (width, height))
     resp, _, _ = compress_nparr(img)
     return Response(response=resp, status=200, mimetype="application/octet_stream")
 

@@ -162,10 +162,10 @@ def parse_args():
     resize_parser = subparsers.add_parser('resize', help='resize images')
     resize_parser.add_argument('--file', '-f', action='store',
             help='the local path of images', required=True, type=str)
-    resize_parser.add_argument('--widthRatio', '-wr', action='store', 
-            help='the width ratio to the old image width, from 0.0 to 1.0', required=True, type=float)
-    resize_parser.add_argument('--heightRatio', '-hr', action='store', 
-            help='the height ratio to the old image height, from 0.0 to 1.0', required=True, type=float)
+    resize_parser.add_argument('--width', '-w', action='store', 
+            help='the new width', required=True, type=int)
+    resize_parser.add_argument('--height', '-hi', action='store', 
+            help='the new height', required=True, type=int)
     
     flip_parser = subparsers.add_parser('flip', help='flip images')
     flip_parser.add_argument('--file', '-f', action='store',
@@ -196,9 +196,9 @@ def apply_op(results):
         # print (results.file)
         flip(results.file, results.dir)
     if op == 'resize':
-        # print (results.widthRatio, results.heightRatio)
+        # print (results.width, results.height)
         # print (results.file)
-        resize(results.file, results.widthRatio, results.heightRatio)
+        resize(results.file, results.width, results.height)
     if op == 'rotate':
         # print (results.angle)
         # print (results.file)
@@ -212,7 +212,7 @@ def apply_op(results):
     
 
 if __name__ == '__main__':
-    # resize('/Users/xxx0624/Downloads/drives/IMG_8440.JPG', 0.5, 0.5)
+    # resize('/Users/xxx0624/Downloads/drives/IMG_8440.JPG', 50, 500)
     # rotate('/Users/xxx0624/Downloads/drives/IMG_8440.JPG', 90)
     # flip('/Users/xxx0624/Downloads/drives/IMG_8440.JPG', 'h')
     # generate_thumbnail('/Users/xxx0624/Downloads/drives/IMG_8440.JPG')
