@@ -1,10 +1,9 @@
 from flask import Flask, request, Response
-import jsonpickle, json
+import json
 import numpy as np
 import cv2
-import io, zlib
-import urllib.parse as urlparse
-from urllib.parse import parse_qs
+import io
+import zlib
 
 app = Flask(__name__)
 

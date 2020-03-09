@@ -77,9 +77,11 @@ def generate_thumbnail(file_path):
     url = addr + '/img/resize'
     # encode image
     img = cv2.imread(file_path)
+    width = max(10, int(img.shape[1] * 0.1))
+    height = max(10, int(img.shape[0] * 0.1))
     _, img_encoded = cv2.imencode('.jpg', img)
     payload = img_encoded.tostring()
-    response = requests.post(url, data=payload, params = {'w': 0.1, 'h': 0.1})
+    response = requests.post(url, data=payload, params = {'w': width, 'h': height})
     if response.status_code != 200:
         print (json.loads(response.content))
         return None
@@ -221,9 +223,12 @@ def apply_ops(parser):
         else:
             # something wrong in the parameter list
             return None
+    if len(temp_argvs) > 0:
+        argvs_list.append(temp_argvs)
 
     argv_space = argparse.Namespace()
     file_path = None
+    print ('to be excuted commands:\n', argvs_list, '\n')
     for argvs in argvs_list:
         if not file_path is None:
             argvs.append('-f')
@@ -236,17 +241,6 @@ def apply_ops(parser):
         else:
             print ('{', argvs, '} is done')
     return file_path
-
-    # while all_argvs:
-    #     argv_space, all_argvs = parser.parse_known_args(all_argvs, namespace=argv_space)
-    #     file_path = apply_op(argv_space)
-    #     if file_path is None:
-    #         return None
-    #     if len(all_argvs) == 0:
-    #         return file_path
-    #     all_argvs.append('-f')
-    #     all_argvs.append(file_path)
-    # return argv_space.file
 
 
 def apply_op(results):
@@ -276,5 +270,5 @@ def apply_op(results):
 if __name__ == '__main__':
     parser = parse_args()
     updated_file_path = apply_ops(parser)
-    print (updated_file_path)
+    print ('final image: ', updated_file_path)
     pass
