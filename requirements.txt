@@ -1,0 +1,7 @@
+Flask==1.1.1
+requests==2.23.0
+opencv_python==4.2.0.32
+google_auth_oauthlib==0.4.1
+numpy==1.17.4
+google_api_python_client==1.7.11
+protobuf==3.11.3
