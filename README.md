@@ -59,7 +59,7 @@ Pls see the below `Prepare` & `How to use` section.
 python3 server.py
 ```
 
-1. Apply only one action to the image
+2.1 Apply only one action to the image
 ```
 // resize the imageExample.jpg to the new size with width 100 and height 200
 python3 client.py resize -f /path/to/imageExample.jpg -w 100 -hi 200
@@ -69,7 +69,7 @@ python3 client.py flip -d v -f /path/to/imageExample.jpg
 
 More info: python3 client3.py -h
 ```
-2. Apply multiple actions to the image
+2.2 Apply multiple actions to the image
 ```
 // resize the image twice but lastly the size is 50*20
 python3 client.py resize -f /path/to/imageExample.jpg -w 100 -hi 200 resize -w 50 -hi 20
